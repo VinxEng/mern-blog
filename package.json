@@ -5,13 +5,18 @@
 	"type": "module",
 	"main": "index.js",
 	"scripts": {
-		"dev": "nodemon api/index.js",
-		"start": "node api/index.js"
+		"dev": "nodemon  api/index.js",
+		"start": "node api/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"clean": "rm -rf build && mkdir build",
+		"build-babel": "babel ./src -d ./build/src"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@babel/runtime": "^7.24.7",
+		"bcryptjs": "^2.4.3",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
 		"mongoose": "^8.4.3",

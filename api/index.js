@@ -1,20 +1,22 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-mongoose
-	.connect(process.env.DEVDATA)
-	.then(() => {
-		console.log("ket noi MongoDB thanh cong.");
-	})
-	.catch((err) => {
-		console.log(err);
-	});
-
+import userRoute from "./routes/user.route.js";
+import authRoute from "./routes/auth.route.js";
 const app = express();
 
-app.listen(3000, () => {
-	console.log("Server is running on port 3000! Status: Running....");
-});
+//
+app.use(express.json());
+app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
+
+const port = process.env.PORT || 5000;
+mongoose
+	.connect(process.env.MONGODB_URI)
+	.then(() => {
+		app.listen(port, () => {
+			console.log(`Server is listening on http://localhost:${port}`);
+		});
+	})
+	.catch((err) => console.log(`Unable to get database collection: ${err}`));
