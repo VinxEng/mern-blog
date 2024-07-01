@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import { errorHandle } from "../utils/error.js";
+import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
@@ -15,7 +15,7 @@ export const signup = async (req, res, next) => {
 		password === ""
 	) {
 		// return res.status(400).json({ msg: "All fields are required!" });
-		next(errorHandle(400, "All fields are required!"));
+		next(errorHandler(400, "All fields are required!"));
 	}
 
 	const hashPassword = bcrypt.hashSync(password, 10);
@@ -38,17 +38,17 @@ export const signin = async (req, res, next) => {
 	const { email, password } = req.body;
 
 	if (!email || !password || email === "" || password === "") {
-		next(errorHandle(400, "Hãy điền đầy đủ thông tin."));
+		next(errorHandler(400, "Hãy điền đầy đủ thông tin."));
 	}
 
 	try {
 		const validUser = await User.findOne({ email });
 		if (!validUser) {
-			return next(errorHandle(404, "Email không hợp lệ!"));
+			return next(errorHandler(404, "Email không hợp lệ!"));
 		}
 		const validPass = bcrypt.compareSync(password, validUser.password);
 		if (!validPass) {
-			return next(errorHandle(400, "Password không hợp lệ."));
+			return next(errorHandler(400, "Password không hợp lệ."));
 		}
 
 		const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);

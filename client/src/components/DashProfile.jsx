@@ -20,7 +20,7 @@ export default function Profile() {
 	const [imageFileUploadError, setImageFileUploadError] = useState(null);
 	const [imageFileUploading, setImageFileUploading] = useState(false);
 
-	console.log(imageFileUploadProgress, imageFileUploadError);
+	// console.log(imageFileUploadProgress, imageFileUploadError);
 
 	const filePickerRef = useRef();
 	const handleImageChange = (e) => {
