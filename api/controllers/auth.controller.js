@@ -51,7 +51,10 @@ export const signin = async (req, res, next) => {
 			return next(errorHandler(400, "Password không hợp lệ."));
 		}
 
-		const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+		const token = jwt.sign(
+			{ id: validUser._id, isAdmin: validUser.isAdmin },
+			process.env.JWT_SECRET
+		);
 
 		//* Dòng này sử dụng tính năng phá hủy đối tượng để tạo một phần còn lại đối tượng mới.
 		//* Loại trừ thuộc tính mật khẩu khỏi đối tượng validUser._doc.
